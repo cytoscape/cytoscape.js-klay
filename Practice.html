@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Graph Sandbox</title>
+
+  <meta charset="utf-8" />
+
+  <script type="text/javascript"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <script src="cytoscape-klayjs.js"></script>
+  <script type="text/javascript" src="node_modules/klayjs/klay.js"></script>
+
+  <script src="../cytoscape.js-MatterJS/cytoscape-matterjs.js"></script>
+  <script src="../cytoscape.js-MatterJS/node_modules/matter-js/build/matter.js"></script>
+  <script src="../matter-js-plugins/examples/attractorsPlugin.js"></script>
+  <script src="../matter-js-plugins/examples/gravityPlugin.js"></script>
+  <script type="text/javascript" src="../cytoscape.js-MatterJS/node_modules/poly-decomp/build/decomp.min.js"></script>
+  <script src="code.js"></script>
+
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type = "text/css" href="style.css"/>
+</head>
+<body>
+  <div id="cy"></div>
+
+  <div id="side" class="scroll">
+    <h1 id="hSide">Options</h1>
+
+
+    <div class="panel panel-default panel-side">
+      <div class="panel-heading">
+        <h1 class="panel-title">
+          <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+          <b>Manage Nodes</b>
+        </h1>
+      </div>
+      <div class="panel-group" id="manageNodesAccordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingAddNode">
+            <h4 class="panel-title">
+              <a class="collapsed"role="button" data-toggle="collapse" data-parent="#manageNodesAccordion" href="#collapseAddNode" aria-expanded="true" aria-controlls="collapseAddNode">
+                Add Node
+              </a>
+            </h4>
+          </div>
+          <div id="collapseAddNode" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingAddNode">
+            <div class="panel-body">
+              <input id="newNodeInput" class="field-side" placeholder="New Node Name">
+              <br />
+              <button class = "btn btn-default" onclick="clear('addNode')">Clear</button>
+              <button class="btn btn-primary" onclick="addNode(document.getElementById('newNodeInput').value)">Confirm</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingRemoveNode">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#manageNodesAccordion" href="#collapseRemoveNode" aria-expanded="false" aria-controlls="collapseRemoveNode">
+                Remove Node
+              </a>
+            </h4>
+          </div>
+          <div id="collapseRemoveNode" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingRemoveNode">
+            <div class="panel-body">
+              <input id="remNodeInput" class="field-side" placeholder="Remove Node Name"
+              <br />
+              <button class = "btn btn-default" onclick="clear('removeNode')">Clear</button>
+              <button class="btn btn-danger" onclick="removeNode(document.getElementById('remNodeInput').value)">Confirm</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingAddEdge">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#manageNodesAccordion" href="#collapseAddEdge" aria-expanded="false" aria-controlls="collapseAddEdge">
+                Add Edge
+              </a>
+            </h4>
+          </div>
+          <div id="collapseAddEdge" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingAddEdge">
+            <div class="panel-body">
+              <input id="newEdgeInput" class="field-side" placeholder="New Edge Name">
+              <input id="newSourceInput" class="field-side" placeholder="Edge Source">
+              <input id="newTargetInput" class="field-side" placeholder="Edge Target">
+              <br />
+              <button class = "btn btn-default" onclick="clear('addEdge')">Clear</button>
+              <button class="btn btn-primary" onclick="addEdge(document.getElementById('newEdgeInput').value, document.getElementById('newSourceInput').value, document.getElementById('newTargetInput').value)">Confirm</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingRemoveEdge">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#manageNodesAccordion" href="#collapseRemoveEdge" aria-expanded="false" aria-controlls="collapseRemoveEdge">
+                Remove Edge
+              </a>
+            </h4>
+          </div>
+          <div id="collapseRemoveEdge" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingRemoveEdge">
+            <div class="panel-body">
+              <input id="remEdgeInput" class="field-side" placeholder="Remove Edge Name"
+              <br />
+              <button class = "btn btn-default" onclick="clear('removeEdge')">Clear</button>
+              <button class="btn btn-danger" onclick="removeEdge(document.getElementById('remEdgeInput').value)">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="panel panel-default panel-side">
+      <div class="panel-heading">
+        <h1 class="panel-title">
+          <span class="glyphicon glyphicon glyphicon-th" aria-hidden="true"></span>
+          <b>Layouts</b>
+        </h1>
+      </div>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingRandom">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseRandom" aria-expanded="true" aria-controlls="collapseRandom">
+                Random
+              </a>
+            </h4>
+          </div>
+          <div id="collapseRandom" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingRandom">
+            <div class="panel-body">
+              <button class = "btn btn-success" onclick="setLayout('random')">Random</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingCose">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseCose" aria-expanded="false" aria-controlls="collapseCose">
+                Cose
+              </a>
+            </h4>
+          </div>
+          <div id="collapseCose" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingCose">
+            <div class="panel-body">
+              <button class = "btn btn-success" onclick="setLayout('cose',{})">Cose</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingKLayJS">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseKLayJS" aria-expanded="false" aria-controlls="collapseKLayJS">
+                KLayJS
+              </a>
+            </h4>
+          </div>
+          <div id="collapseKLayJS" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingKLayJS">
+            <div class="panel-body">
+              <div class = "form-group">
+                <label for="addUnnecessaryBendpoints">Unnecessary Bendpoints</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="addUnnecessaryBendpoints" id="addUnnecessaryBendpointsTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="addUnnecessaryBendpoints" id="addUnnecessaryBendpointsFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="alignment">Alignment</label><br />
+                <input id="alignment" class="field-side" placeholder="<enum>, Default: AUTOMATIC"></input>
+              </div>
+              <div class="form-group">
+                <label for="aspectRatio">Aspect Ratio</label><br />
+                <input id="aspectRatio" class="field-side" placeholder="<float>, Default: 1.6"></input>
+              </div>
+              <div class="form-group">
+                <label for="borderSpacing">Border Spacing</label><br />
+                <input id="borderSpacing" class="field-side" placeholder="<float>, Default: 12"></input>
+              </div>
+              <div class="form-group">
+                <label for="compactComponents">Compact Components</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="compactComponents" id="compactComponentsTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="compactComponents" id="compactComponentsFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="compactionStrategy">Compaction Strategy</label><br />
+                <input id="compactionStrategy" class="field-side" placeholder="<enum>, Default: <NONE>"></input>
+              </div>
+              <div class="form-group">
+                <label for="contentAlignment">Content Alignment</label>
+                <input id="contentAlignment" class="field-side" placeholder="<enumset>, Default: <NONE>"></input>
+              </div>
+              <div class="form-group">
+                <label for="crossingMinimization">Crossing Minimization</label>
+                <input id="crossingMinimization" class="field-side" placeholder="<enum>, Default: LAYER_SWEEP"></input>
+              </div>
+              <div class="form-group">
+                <label for="cycleBreaking"> Cycle Breaking</label>
+                <input id="cycleBreaking" class="field-side" placeholder="<enum>, Default: GREEDY"></input>
+              </div>
+              <div class="form-group">
+                <label for="debugMode">Debug Mode</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="debugMode" id="debugModeTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="debugMode" id="debugModeFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label for="direction">Direction</label>
+                <input id="direction" class="field-side" placeholder="<enum>, Default: RIGHT"></input>
+              </div>
+              <div class = "form-group">
+                <label for="edgeLabelSideSelection">Edge Label Side Selection</label>
+                <input id="edgeLabelSideSelection" class="field-side" placeholder="<enum>, Default: ALWAYS_DOWN"></input>
+              </div>
+              <div class="form-group">
+                <label for="edgeRouting">Edge Routing</label>
+                <input id="edgeRouting" class="field-side" placeholder="<enum>, Default: ORTHOGONAL"></input>
+              </div>
+              <div class="form-group">
+                <label for="edgeSpacingFactor">Edge Spacing Factor</label>
+                <input id="edgeSpacingFactor" class="field-side" placeholder="<float>, Default: 0.5"></input>
+              </div>
+              <div class="form-group">
+                <label for="feedbackEdges">Feedback Edges</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="feedbackEdges" id="feedbackEdgesTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="feedbackEdges" id="feedbackEdgesFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label for="fixedAlignment">Fixed Alignment</label>
+                <input id="fixedAlignment" class="field-side" placeholder="<enum>, Default: NONE"></input>
+              </div>
+              <div class = "form-group">
+                <label for="greedySwitchCrossingMinimization">Greedy Switch Crossing Minimization</label>
+                <input id="greedySwitchCrossingMinimization" class="field-side" placeholder="<enum>, Default: TWO_SIDED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="hierarchyHandling">Hierarchy Handling</label>
+              <input id="hierarchyHandling" class="field-side" placeholder="<enum>, Default: INHERIT"></input>
+              </div>
+              <div class = "form-group">
+                <label for="inLayerSpacingFactor">In Layer Spacing Factor</label>
+              <input id="inLayerSpacingFactor" class="field-side" placeholder="<float>, Default: 1"></input>
+              </div>
+              <div class = "form-group">
+                <label for="interactiveReferencePoint">Interactive Reference Point</label>
+                <input id="interactiveReferencePoint" class="field-side" placeholder="<enum>, Default: CENTER"></input>
+              </div>
+              <div class = "form-group">
+                <label for="layerConstraint">Layer Constraint</label>
+                <input id="layerConstraint" class="field-side" placeholder="<enum>, Default: NONE"></input>
+              </div>
+              <div class="form-group">
+                <label for="layoutHierarchy">Layout Hierarchy</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="layoutHierarchy" id="layoutHierarchyTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="layoutHierarchy" id="layoutHierarchyFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label for="linearSegmentsDeflectionDampening">Linear Segments Deflection Dampening</label>
+                <input id="linearSegmentsDeflectionDampening" class="field-side" placeholder="<float>, Default: 0.3"></input>
+              </div>
+              <div class="form-group">
+                <label for="mergeEdges">Merge Edges</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="mergeEdges" id="mergeEdgesTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="mergeEdges" id="mergeEdgesFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="mergeHierarchyCrossingEdges">Merge Hierarchy Crossing Edges</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="mergeHierarchyCrossingEdges" id="mergeHierarchyCrossingEdgesTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="mergeHierarchyCrossingEdges" id="mergeHierarchyCrossingEdgesFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="noLayout">No Layout</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="noLayout" id="noLayoutTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="noLayout" id="noLayoutFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label for="nodeLabelPlacement">Node Label Placement</label>
+                <input id="nodeLabelPlacement" class="field-side" placeholder="<enumset>, Default: <NONE>"></input>
+              </div>
+              <div class = "form-group">
+                <label for="nodeLayering">Node Layering</label>
+                <input id="nodeLayering" class="field-side" placeholder="<enum>, Default: NETWORK_SIMPLEX"></input>
+              </div>
+              <div class = "form-group">
+                <label for="nodePlacement">Node Placement</label>
+                <input id="nodePlacement" class="field-side" placeholder="<enum>, Default: BRANDES_KOEPF"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portAlignment">Port Alignment</label>
+                <input id="portAlignment" class="field-side" placeholder="<enum>, Default: JUSTIFIED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portAlignmentEastern">Port Alignment East</label>
+                <input id="portAlignmentEastern" class="field-side" placeholder="<enum>, Default: UNDEFINED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portAlignmentNorth">Port Alignment North</label>
+                <input id="portAlignmentNorth" class="field-side" placeholder="<enum>, Default: UNDEFINED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portAlignmentSouth">Port Alignment South</label>
+                <input id="portAlignmentSouth" class="field-side" placeholder="<enum>, Default: UNDEFINED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portAlignmentWest">Port Alignment West</label>
+                <input id="portAlignmentWest" class="field-side" placeholder="<enum>, Default: UNDEFINED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portConstraints">Port Constraints</label>
+                <input id="portConstraints" class="field-side" placeholder="<enum>, Default: UNDEFINED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portLabelPlacement">Port Label Placement</label>
+                <input id="portLabelPlacement" class="field-side" placeholder="<enum>, Default: OUTSIDE"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portOffset">Port Offset</label>
+                <input id="portOffset" class="field-side" placeholder="<float>, Default: <NONE>"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portSide">Port Side</label>
+                <input id="portSide" class="field-side" placeholder="<enum>, Default: UNDEFINED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="portSpacing">Port Spacing</label>
+                <input id="portSpacing" class="field-side" placeholder="<float>, Default: 10"></input>
+              </div>
+              <div class = "form-group">
+                <label for="postCompaction">Post Compaction</label>
+                <input id="postCompaction" class="field-side" placeholder="<enum>, Default: NONE"></input>
+              </div>
+              <div class = "form-group">
+                <label for="priority">Priority</label>
+                <input id="priority" class="field-side" placeholder="<int>, Default: <NONE>"></input>
+              </div>
+              <div class = "form-group">
+                <label for="randomizationSeed">Randomization Seed</label>
+                <input id="randomizationSeed" class="field-side" placeholder="<int>, Default: 1"></input>
+              </div>
+              <div class = "form-group">
+                <label for="routeSelfLoopInside">Route Self Loop Inside</label>
+                <input id="routeSelfLoopInside" class="field-side" placeholder="Route Self Loop Inside"></input>
+              </div>
+              <div class="form-group">
+                <label for="routeSelfLoopInside">Route Self Loop Inside</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="routeSelfLoopInside" id="routeSelfLoopInsideTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="routeSelfLoopInside" id="routeSelfLoopInsideFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="separateConnectedComponents">Separate Connected Components</label><br />
+                <div class="btn-group" data-toggle="buttons">
+                  <label class ="btn btn-primary">
+                    <input type="radio" name="separateConnectedComponents" id="separateConnectedComponentsTrue" autocomplete="off"></input>
+                    True
+                  </label>
+                  <label class = "btn btn-primary">
+                    <input type="radio" name="separateConnectedComponents" id="separateConnectedComponentsFalse" autocomplete="off"></input>
+                    False
+                  </label>
+                </div>
+              </div>
+              <div class = "form-group">
+                <label for="sizeConstraint">Size Constraint</label>
+                <input id="sizeConstraint" class="field-side" placeholder="<enumset>, Default: <NONE>"></input>
+              </div>
+              <div class = "form-group">
+                <label for="sizeOptions">Size Options</label>
+                <input id="sizeOptions" class="field-side" placeholder="<enumset>, Default: DEFAULT_MINIMUM_SIZE APPLY_ADDITIONAL_INSETS"></input>
+              </div>
+              <div class = "form-group">
+                <label for="spacing">Spacing</label>
+                <input id="spacing" class="field-side" placeholder="<float>, Default: 20"></input>
+              </div>
+              <div class = "form-group">
+                <label for="splineSelfLoopPlacement">Spline Self Loop Placement</label>
+                <input id="splineSelfLoopPlacement" class="field-side" placeholder="<enum>, Default: NORTH_STACKED"></input>
+              </div>
+              <div class = "form-group">
+                <label for="thoroughness">Thoroughness</label>
+                <input id="thoroughness" class="field-side" placeholder="<int>, Default: 7"></input>
+              </div>
+              <div class = "form-group">
+                <label for="wideNodesOnMultipleLayers">Wide Nodes On Multiple Layers</label>
+                <input id="wideNodesOnMultipleLayers" class="field-side" placeholder="<enum>, Default: OFF"></input>
+              </div>
+              <div class = "form-group">
+              <button class = "btn btn-default" onclick="clear('klayjs')">Clear</button>
+              <button class = "btn btn-success" onclick="setLayout('klayjs', {
+                addUnnecessaryBendpoints: document.getElementById('addUnnecessaryBendpointsTrue').checked,
+                alignment: document.getElementById('alignment').value,
+                aspectRatio: document.getElementById('aspectRatio').value,
+                borderSpacing: document.getElementById('borderSpacing').value,
+                compactComponents: document.getElementById('compactComponentsTrue').checked,
+                compactionStrategy: document.getElementById('compactionStrategy').value,
+                contentAlignment: document.getElementById('contentAlignment').value,
+                crossingMinimization: document.getElementById('crossingMinimization').value,
+                cycleBreaking: document.getElementById('cycleBreaking').value,
+                debugMode: document.getElementById('debugModeTrue').checked,
+                direction: document.getElementById('direction').value,
+                edgeLabelSideSelection: document.getElementById('edgeLabelSideSelection').value,
+                /*edgeNodeSpacingFactor: 0.5,*/
+                edgeRouting: document.getElementById('edgeRouting').value,
+                edgeSpacingFactor: document.getElementById('edgeSpacingFactor').value,
+                feedbackEdges: document.getElementById('feedbackEdgesTrue').checked,
+                fixedAlignment: document.getElementById('fixedAlignment').value,
+                greedySwitchCrossingMinimization: document.getElementById('greedySwitchCrossingMinimization').value,
+                hierarchyHandling: document.getElementById('hierarchyHandling').value,
+                inLayerSpacingFactor: document.getElementById('inLayerSpacingFactor').value,
+                interactiveReferencePoint: document.getElementById('interactiveReferencePoint').value,
+                layerConstraint: document.getElementById('layerConstraint').value,
+                layoutHierarchy: document.getElementById('layoutHierarchyTrue').checked,
+                linearSegmentsDeflectionDampening: document.getElementById('linearSegmentsDeflectionDampening').value,
+                mergeEdges: document.getElementById('mergeEdgesTrue').checked,
+                mergeHierarchyCrossingEdges: document.getElementById('mergeHierarchyCrossingEdgesTrue').checked,
+                noLayout: document.getElementById('noLayoutTrue').checked,
+                nodeLabelPlacement: document.getElementById('nodeLabelPlacement').value,
+                nodeLayering: document.getElementById('nodeLayering').value,
+                nodePlacement: document.getElementById('nodePlacement').value,
+                portAlignment: document.getElementById('portAlignment').value,
+                portAlignmentEastern: document.getElementById('portAlignmentEastern').value,
+                portAlignmentNorth: document.getElementById('portAlignmentNorth').value,
+                portAlignmentSouth: document.getElementById('portAlignmentSouth').value,
+                portAlignmentWest: document.getElementById('portAlignmentWest').value,
+                portConstraints: document.getElementById('portConstraints').value,
+                portLabelPlacement: document.getElementById('portLabelPlacement').value,
+                portOffset: document.getElementById('portOffset').value,
+                portSide: document.getElementById('portSide').value,
+                portSpacing: document.getElementById('portSpacing').value,
+                postCompaction: document.getElementById('postCompaction').value,
+                priority: document.getElementById('priority').value,
+                randomizationSeed: document.getElementById('randomizationSeed').value,
+                routeSelfLoopInside: document.getElementById('routeSelfLoopInsideTrue').checked,
+                separateConnectedComponents: document.getElementById('separateConnectedComponentsTrue').checked,
+                sizeConstraint: document.getElementById('sizeConstraint').value,
+                sizeOptions: document.getElementById('sizeOptions').value,
+                spacing: document.getElementById('spacing').value,
+                splineSelfLoopPlacement: document.getElementById('splineSelfLoopPlacement').value,
+                thoroughness: document.getElementById('thoroughness').value,
+                wideNodesOnMultipleLayers: document.getElementById('wideNodesOnMultipleLayers').value,
+              })">KLayJS</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingMatterJS">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseMatterJS" aria-expanded="false" aria-controlls="collapseMatterJS">
+                MatterJS
+              </a>
+            </h4>
+          </div>
+          <div id="collapseMatterJS" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingMatterJS">
+            <div class="panel-body">
+              <button class = "btn btn-success" onclick="setLayout('matterjs',{})">MatterJS</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="panel panel-default panel-side">
+      <div class="panel-heading">
+        <h1 class="panel-title">
+          <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+          <b>Algorithms</b>
+        </h1>
+      </div>
+      <div class="panel-group" id="algorithmsAccordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingBreadthFirstSearch">
+            <h4 class="panel-title">
+              <a class="collapsed"role="button" data-toggle="collapse" data-parent="#algorithmsAccordion" href="#collapseBreadthFirstSearch" aria-expanded="true" aria-controlls="collapseBreadthFirstSearch">
+                Breadth First Search
+              </a>
+            </h4>
+          </div>
+          <div id="collapseBreadthFirstSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingBreadthFirstSearch">
+            <div class="panel-body">
+              <input id="rootNodeBFSInput" class="field-side" placeholder="Root Node Name">
+              <br />
+              <input id="targetNodeBFSInput" class="field-side" placeholder="Target Node Name">
+              <button class = "btn btn-default" onclick="clear('breadthFirstSearch')">Clear</button>
+              <button class="btn btn-primary" onclick="bfs(document.getElementById('rootNodeBFSInput').value, document.getElementById('targetNodeBFSInput').value)">Confirm</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingAStarSearch">
+            <h4 class="panel-title">
+              <a class="collapsed"role="button" data-toggle="collapse" data-parent="#algorithmsAccordion" href="#collapseAStarSearch" aria-expanded="true" aria-controlls="collapseAStarSearch">
+                A* Search
+              </a>
+            </h4>
+          </div>
+          <div id="collapseAStarSearch" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingAStarSearch">
+            <div class="panel-body">
+              <input id="rootNodeAStarInput" class="field-side" placeholder="Root Node Name">
+              <br />
+              <input id="targetNodeAStarInput" class="field-side" placeholder="Target Node Name">
+              <button class = "btn btn-default" onclick="clear('aStarSearch')">Clear</button>
+              <button class="btn btn-primary" onclick="bfs(document.getElementById('rootNodeAStarInput').value, document.getElementById('targetNodeAStarInput').value)">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

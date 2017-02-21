@@ -1,0 +1,37 @@
+{
+  "name": "cytoscape-klayjs",
+  "version": "0.0.0",
+  "description": "KLayJS for Cytoscape",
+  "main": "cytoscape-klayjs.js",
+  "spm": {
+    "main": "cytoscape-klayjs.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cytoscape.js-KLayJS.git"
+  },
+  "keywords": [
+    "cytoscape",
+    "cyext"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cytoscape.js-KLayJS/issues"
+  },
+  "homepage": "https://github.com/cytoscape.js-KLayJS",
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-jshint": "^1.8.5",
+    "gulp-prompt": "^0.1.1",
+    "gulp-replace": "^0.4.0",
+    "gulp-shell": "^0.2.9",
+    "jshint-stylish": "^1.0.0",
+    "run-sequence": "^1.0.0"
+  },
+  "peerDependencies": {
+    "cytoscape": "^2.7.0"
+  }
+}
