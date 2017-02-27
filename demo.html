@@ -1,0 +1,165 @@
+<!DOCTYPE>
+
+<html>
+
+	<head>
+		<title>cytoscape-klayjs.js demo</title>
+
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+		<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+
+		<!-- for testing with local version of cytoscape.js -->
+		<script src="../cytoscape.js-2.7.13/cytoscape.js"></script>
+
+		<script src="cytoscape-klayjs.js"></script>
+		<script type="text/javascript" src="node_modules/klayjs/klay.js"></script>
+		<style>
+			body {
+				font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
+				font-size: 14px;
+			}
+
+			#cy {
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				z-index: 999;
+			}
+
+			h1 {
+				opacity: 0.5;
+				font-size: 1em;
+				font-weight: bold;
+			}
+		</style>
+
+		<script>
+			document.addEventListener('DOMContentLoaded', function(){
+
+				var cy = window.cy = cytoscape({
+					container: document.getElementById('cy'),
+
+					// demo your layout
+					layout: {
+						name: 'klayjs',
+						padding: 100,
+						addUnnecessaryBendpoints: false,
+						alignment: "LEFT",
+						aspectRatio: 1.6,
+						borderSpacing: 12,
+						compactComponents: false,
+						compactionStrategy: "CLASSIC",
+						contentAlignment: "V_TOP",
+						crossingMinimization: "LAYER_SWEEP",
+						cycleBreaking: "GREEDY",
+						debugMode: false,
+						direction: "RIGHT",
+						edgeLabelSideSelection: "ALWAYS_DOWN",
+						//edgeNodeSpacingFactor: 0.5,
+						edgeRouting: "ORTHOGONAL",
+						edgeSpacingFactor: 0.5,
+						feedbackEdges: false,
+						fixedAlignment: "NONE",
+						greedySwitchCrossingMinimization: "TWO_SIDED",
+						hierarchyHandling: "INHERIT",
+						inLayerSpacingFactor: 1,
+						interactiveReferencePoint: "CENTER",
+						layerConstraint: "NONE",
+						layoutHierarchy: false,
+						linearSegmentsDeflectionDampening: 0.3,
+						mergeEdges: true,
+						mergeHierarchyCrossingEdges: true,
+						noLayout: false,
+						nodeLabelPlacement: "H_LEFT",
+						nodeLayering: "NETWORK_SIMPLEX",
+						nodePlacement: "BRANDES_KOEPF",
+						portAlignment: "JUSTIFIED",
+						portAlignmentEastern: "UNDEFINED",
+						portAlignmentNorth: "UNDEFINED",
+						portAlignmentSouth: "UNDEFINED",
+						portAlignmentWest: "UNDEFINED",
+						portConstraints: "UNDEFINED",
+						portLabelPlacement: "OUTSIDE",
+						portOffset: 0,
+						portSide: "UNDEFINED",
+						portSpacing: 10,
+						postCompaction:"NONE",
+						priority: 0,
+						randomizationSeed:1,
+						routeSelfLoopInside:false,
+						separateConnectedComponents:true,
+						sizeConstraint:"",
+						sizeOptions:"DEFAULT_MINIMUM_SIZE APPLY_ADDITIONAL_INSETS",
+						spacing: 20,
+						splineSelfLoopPlacement: "NORTH_STACKED",
+						thoroughness: 7,
+						wideNodesOnMultipleLayers:"OFF",
+						// some more options here...
+					},
+
+					style: [
+						{
+							selector: 'node',
+							style: {
+								'content': 'data(name)'
+							}
+						},
+
+						{
+							selector: 'edge',
+							style: {
+								'target-arrow-shape': 'triangle'
+							}
+						},
+
+						{
+							selector: ':selected',
+							style: {
+
+							}
+						}
+					],
+
+					elements: {
+						nodes: [
+							{ data: { id: 'j', name: 'Jerry' } },
+							{ data: { id: 'e', name: 'Elaine' } },
+							{ data: { id: 'k', name: 'Kramer' } },
+							{ data: { id: 'g', name: 'George' } },
+							{ data: { id: 'f', name: 'fafafa' } }
+						],
+						edges: [
+							{ data: { source: 'j', target: 'e' } },
+							{ data: { source: 'j', target: 'k' } },
+							{ data: { source: 'j', target: 'g' } },
+							{ data: { source: 'e', target: 'g' } },
+							{ data: { source: 'e', target: 'j' } },
+							{ data: { source: 'e', target: 'k' } },
+							{ data: { source: 'k', target: 'j' } },
+							{ data: { source: 'k', target: 'e' } },
+							{ data: { source: 'k', target: 'g' } },
+							{ data: { source: 'g', target: 'j' } },
+							{ data: { source: 'f', target: 'j' } },
+							{ data: { source: 'f', target: 'e' } },
+							{ data: { source: 'f', target: 'g' } },
+							{ data: { source: 'f', target: 'k' } },
+						]
+					},
+				});
+
+
+			});
+		</script>
+	</head>
+
+	<body>
+		<h1>cytoscape-klayjs demo</h1>
+
+		<div id="cy"></div>
+
+	</body>
+
+</html>

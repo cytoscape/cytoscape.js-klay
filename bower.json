@@ -1,0 +1,24 @@
+{
+  "name": "cytoscape-klayjs",
+  "description": "KLayJS for Cytoscape",
+  "main": "cytoscape-klayjs.js",
+  "dependencies": {
+    "cytoscape": "^2.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cytoscape.js-KLayJS.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "keywords": [
+    "cytoscape",
+    "cyext"
+  ],
+  "license": "MIT"
+}
