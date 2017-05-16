@@ -4,7 +4,7 @@ cytoscape-klay
 
 ## Description
 
-KLayJS layout for Cytoscape
+[KLayJS](https://github.com/OpenKieler/klayjs) layout for Cytoscape
 
 This discrete layout creates good results for most graphs and it supports compound nodes.
 
@@ -46,6 +46,7 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 var options = {
   klay: {
     // following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
+    // for more info see https://github.com/OpenKieler/klayjs
     addUnnecessaryBendpoints: false, // Adds bend points even if an edge does not change direction.
     aspectRatio: 1.6, // The aimed aspect ratio of the drawing, that is the quotient of width by height
     borderSpacing: 20, // Minimal amount of space to be left to the border
