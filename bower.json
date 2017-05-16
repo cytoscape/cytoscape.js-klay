@@ -1,13 +1,13 @@
 {
-  "name": "cytoscape-klayjs",
+  "name": "cytoscape-klay",
   "description": "KLayJS for Cytoscape",
-  "main": "cytoscape-klayjs.js",
+  "main": "cytoscape-klay.js",
   "dependencies": {
-    "cytoscape": "^2.7.0"
+    "cytoscape": "^3.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cytoscape.js-KLayJS.git"
+    "url": "https://github.com/cytoscape/cytoscape.js-klay.git"
   },
   "ignore": [
     "**/.*",
