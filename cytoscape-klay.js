@@ -79,6 +79,14 @@
     };
 
     var defaults = {
+      nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
+      fit: true,
+      padding: 20,                        // padding on fit
+      animate: false,                     // whether to transition the node positions
+      animationDuration: 500,             // duration of animation in ms if enabled
+      animationEasing: undefined,         // easing of animation if enabled
+      ready: undefined,                   // callback on layoutready
+      stop: undefined,                    // callback on layoutstop
       klay: {
         // following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
         addUnnecessaryBendpoints: false, // Adds bend points even if an edge does not change direction.
@@ -124,8 +132,6 @@
         thoroughness: 7 // How much effort should be spent to produce a nice layout..
       },
       priority: function( edge ){ return null; }, // Edges with a non-nil value are skipped when geedy edge cycle breaking is enabled
-      nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
-      fit: true
     };
 
     var extend = Object.assign || function( tgt ){
@@ -204,7 +210,7 @@
       var klayNodes = [];
       var klayEdges = [];
       var klayEleLookup = {};
-      var klayHierarchyEles = {
+      var graph = {
         id: 'root',
         children: [],
         edges: []
@@ -236,7 +242,7 @@
         var n = k._cyEle;
 
         if( !n.isChild() ){
-          klayHierarchyEles.children.push( k );
+          graph.children.push( k );
         } else {
           var parent = n.parent();
           var parentK = klayEleLookup[ parent.id() ];
@@ -262,12 +268,12 @@
 
           kp.edges.push( k );
         } else {
-          klayHierarchyEles.edges.push( k );
+          graph.edges.push( k );
         }
 
       }
 
-      return klayHierarchyEles;
+      return graph;
     };
 
     function Layout( options ){

@@ -44,6 +44,14 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 
 ```js
 var options = {
+  nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
+  fit: true,                          // fit viewport to graph
+  padding: 20,                        // padding on fit
+  animate: false,                     // whether to transition the node positions
+  animationDuration: 500,             // duration of animation in ms if enabled
+  animationEasing: undefined,         // easing of animation if enabled
+  ready: undefined,                   // callback on layoutready
+  stop: undefined,                    // callback on layoutstop
   klay: {
     // following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
     // for more info see https://github.com/OpenKieler/klayjs
