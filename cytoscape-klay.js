@@ -287,7 +287,6 @@
     Layout.prototype.run = function(){
       var layout = this;
       var options = this.options;
-      var cy = options.cy;
 
       var eles = options.eles;
       var nodes = eles.nodes();
@@ -298,7 +297,7 @@
       klay.layout({
         graph: graph,
         options: mapToKlayNS( options.klay ),
-        success: function (g) {
+        success: function () {
         },
         error: function(error){
           throw error;
