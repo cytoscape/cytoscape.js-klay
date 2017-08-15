@@ -79,16 +79,16 @@
     };
 
     var defaults = {
-      nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
-      fit: true,
-      padding: 20,                        // padding on fit
-      animate: false,                     // whether to transition the node positions
-      animationDuration: 500,             // duration of animation in ms if enabled
-      animationEasing: undefined,         // easing of animation if enabled
-      ready: undefined,                   // callback on layoutready
-      stop: undefined,                    // callback on layoutstop
+      nodeDimensionsIncludeLabels: undefined, // Boolean which changes whether label dimensions are included when calculating node dimensions (default true)
+      fit: true, // Whether to fit
+      padding: 20, // Padding on fit
+      animate: false, // Whether to transition the node positions
+      animationDuration: 500, // Duration of animation in ms if enabled
+      animationEasing: undefined, // Easing of animation if enabled
+      ready: undefined, // Callback on layoutready
+      stop: undefined, // Callback on layoutstop
       klay: {
-        // following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
+        // Following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
         addUnnecessaryBendpoints: false, // Adds bend points even if an edge does not change direction.
         aspectRatio: 1.6, // The aimed aspect ratio of the drawing, that is the quotient of width by height
         borderSpacing: 20, // Minimal amount of space to be left to the border
