@@ -83,8 +83,10 @@
       fit: true, // Whether to fit
       padding: 20, // Padding on fit
       animate: false, // Whether to transition the node positions
+      animateFilter: function( node, i ){ return true; }, // Whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
       animationDuration: 500, // Duration of animation in ms if enabled
       animationEasing: undefined, // Easing of animation if enabled
+      transform: function( node, pos ){ return pos; }, // A function that applies a transform to the final node position
       ready: undefined, // Callback on layoutready
       stop: undefined, // Callback on layoutstop
       klay: {

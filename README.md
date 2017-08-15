@@ -44,17 +44,18 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 
 ```js
 var options = {
-  nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
-  fit: true,                          // fit viewport to graph
-  padding: 20,                        // padding on fit
-  animate: false,                     // whether to transition the node positions
-  animationDuration: 500,             // duration of animation in ms if enabled
-  animationEasing: undefined,         // easing of animation if enabled
-  ready: undefined,                   // callback on layoutready
-  stop: undefined,                    // callback on layoutstop
+  nodeDimensionsIncludeLabels: undefined, // Boolean which changes whether label dimensions are included when calculating node dimensions (default true)
+  fit: true, // Whether to fit
+  padding: 20, // Padding on fit
+  animate: false, // Whether to transition the node positions
+  animateFilter: function( node, i ){ return true; }, // Whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
+  animationDuration: 500, // Duration of animation in ms if enabled
+  animationEasing: undefined, // Easing of animation if enabled
+  transform: function( node, pos ){ return pos; }, // A function that applies a transform to the final node position
+  ready: undefined, // Callback on layoutready
+  stop: undefined, // Callback on layoutstop
   klay: {
-    // following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
-    // for more info see https://github.com/OpenKieler/klayjs
+    // Following descriptions taken from http://layout.rtsys.informatik.uni-kiel.de:9444/Providedlayout.html?algorithm=de.cau.cs.kieler.klay.layered
     addUnnecessaryBendpoints: false, // Adds bend points even if an edge does not change direction.
     aspectRatio: 1.6, // The aimed aspect ratio of the drawing, that is the quotient of width by height
     borderSpacing: 20, // Minimal amount of space to be left to the border
@@ -98,8 +99,6 @@ var options = {
     thoroughness: 7 // How much effort should be spent to produce a nice layout..
   },
   priority: function( edge ){ return null; }, // Edges with a non-nil value are skipped when geedy edge cycle breaking is enabled
-  nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
-  fit: true
 };
 
 cy.layout( options ).run();
