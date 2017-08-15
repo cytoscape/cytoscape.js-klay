@@ -112,3 +112,4 @@ This project is set up to automatically be published to npm and bower.  To publi
 1. Set the version number environment variable: `export VERSION=1.2.3`
 1. Publish: `gulp publish`
 1. If publishing to bower for the first time, you'll need to run `bower register cytoscape-klay https://github.com/cytoscape/cytoscape.js-klay.git`
+1. [Create a Github release](https://github.com/cytoscape/cytoscape.js-klay/releases/new) for the new version so that Zenodo picks it up.
