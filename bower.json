@@ -3,7 +3,7 @@
   "description": "KLayJS for Cytoscape",
   "main": "cytoscape-klay.js",
   "dependencies": {
-    "cytoscape": "^3.0.0"
+    "cytoscape": "^3.2.0"
   },
   "repository": {
     "type": "git",

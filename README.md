@@ -11,7 +11,7 @@ This discrete layout creates good results for most graphs and it supports compou
 
 ## Dependencies
 
- * Cytoscape.js ^3.0.0
+ * Cytoscape.js ^3.2.0
 
 
 ## Usage instructions
