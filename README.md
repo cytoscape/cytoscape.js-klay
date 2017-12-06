@@ -5,7 +5,7 @@ cytoscape-klay
 
 ## Description
 
-The Klay layout algorithm for Cytoscape.js ([demo](https://cytoscape.github.io/cytoscape.js-klay))
+The [Klay](https://github.com/OpenKieler/klayjs) layout algorithm for Cytoscape.js ([demo](https://cytoscape.github.io/cytoscape.js-klay))
 
 This discrete layout creates good results for most graphs and it supports compound nodes.
 
