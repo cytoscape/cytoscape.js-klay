@@ -3,18 +3,20 @@
 <html>
 
 	<head>
-		<title>cytoscape-klayjs.js demo</title>
+		<title>cytoscape-klay.js demo</title>
 
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+		<!-- the demo uses fetch() -->
+		<script src="https://unpkg.com/bluebird@3.5.1/js/browser/bluebird.js"></script>
+		<script src="https://unpkg.com/whatwg-fetch@2.0.3/fetch.js"></script>
 
 		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 
 		<!-- for testing with local version of cytoscape.js -->
-		<!-- <script src="../cytoscape.js/cytoscape.js"></script> -->
+		<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
 
-		<script src="https://cdn.rawgit.com/OpenKieler/klayjs/0.4.1/klay.js"></script>
+		<script src="https://unpkg.com/klayjs@0.4.1/klay.js"></script>
 		<script src="cytoscape-klay.js"></script>
 
 		<style>
@@ -40,208 +42,6 @@
 		</style>
 
 		<script>
-		var g0 = {
-			nodes: [{
-				data: {
-					id: 'compartment',
-					class: 'compartment',
-					label: 'compartment',
-					parent: '',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			},
-			{
-				data: {
-					id: 'complex',
-					class: 'complex',
-					label: 'complex',
-					parent: 'compartment',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			},
-			{
-				data: {
-					id: 'macromolecule',
-					class: 'macromolecule',
-					label: 'macromolecule',
-					parent: 'complex',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				},
-			},
-			{
-				data: {
-					id: 'nucleic acid feature',
-					class: 'nucleic acid feature',
-					label: 'nucleic acid feature',
-					parent: '',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			}],
-			edges: [{
-				data: {
-					id: 'macromolecule-nucleicacidfeature',
-					class: 'production',
-					source: 'macromolecule',
-					target: 'nucleic acid feature'
-				}
-			}]
-		};
-
-		var g1 = {
-			nodes: [{
-				data: {
-					id: 'compartment',
-					class: 'compartment',
-					label: 'compartment',
-					parent: '',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			},
-			{
-				data: {
-					id: 'complex',
-					class: 'complex',
-					label: 'complex',
-					parent: '',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			},
-			{
-				data: {
-					id: 'macromolecule',
-					class: 'macromolecule',
-					label: 'macromolecule',
-					parent: 'complex',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				},
-			},
-			{
-				data: {
-					id: 'nucleic acid feature',
-					class: 'nucleic acid feature',
-					label: 'nucleic acid feature',
-					parent: 'compartment',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			}],
-			edges: [{
-				data: {
-					id: 'macromolecule-nucleicacidfeature',
-					class: 'production',
-					source: 'macromolecule',
-					target: 'nucleic acid feature'
-				}
-			}]
-		};
-
-		var g2 = {
-			nodes: [{
-				data: {
-					id: 'compartment',
-					class: 'compartment',
-					label: 'compartment',
-					parent: '',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			},
-			{
-				data: {
-					id: 'complex',
-					class: 'complex',
-					label: 'complex',
-					parent: '',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			},
-			{
-				data: {
-					id: 'macromolecule',
-					class: 'macromolecule',
-					label: 'macromolecule',
-					parent: 'complex',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				},
-			},
-			{
-				data: {
-					id: 'nucleic acid feature',
-					class: 'nucleic acid feature',
-					label: 'nucleic acid feature',
-					parent: 'compartment',
-					'clonemarker': false,
-					'stateVariables': [],
-					'unitsOfInformation': []
-				}
-			}],
-			edges: [{
-				data: {
-					id: 'compartment-complex',
-					class: 'production',
-					source: 'compartment',
-					target: 'complex'
-				}
-			}]
-		};
-
-		var g3 = [
-		{
-			data: {
-				id: 'n1'
-			}
-		},
-		{
-			data: {
-				id: 'n2'
-			}
-		},
-		{
-			data: {
-				id: 'n3',
-				parent: 'n2'
-			}
-		},
-		{
-			data: {
-				id: 'n4',
-				parent: 'n2'
-			}
-		},
-		{
-			data: {
-				id: 'e1',
-				source: 'n1',
-				target: 'n2'
-			}
-		},
-		{
-			data: {
-				id: 'e4',
-				source: 'n3',
-				target: 'n4'
-			}
-		}];
 			document.addEventListener('DOMContentLoaded', function(){
 
 				var cy = window.cy = cytoscape({
@@ -250,37 +50,31 @@
 					// demo your layout
 					layout: {
 						name: 'klay',
-						klay: {
-						},
-						padding: 30
+
+						// some more options here...
 					},
 
 					style: [
 						{
 							selector: 'node',
 							style: {
-								'content': 'data(name)'
+								'background-color': '#dd4de2'
 							}
 						},
 
 						{
 							selector: 'edge',
 							style: {
-								'target-arrow-shape': 'triangle'
-							}
-						},
-
-						{
-							selector: ':selected',
-							style: {
-
+								'curve-style': 'bezier',
+								'target-arrow-shape': 'triangle',
+								'line-color': '#dd4de2',
+								'target-arrow-color': '#dd4de2',
+								'opacity': 0.5
 							}
 						}
 					],
 
-					elements: fetch('./p53.json').then(function( res ){ return res.json() })
-
-					// elements: g0
+					elements: fetch('./example-graphs/planar-chain.json').then(function( res ){ return res.json(); })
 				});
 
 
@@ -289,7 +83,7 @@
 	</head>
 
 	<body>
-		<h1>cytoscape-klayjs demo</h1>
+		<h1>cytoscape-klay demo</h1>
 
 		<div id="cy"></div>
 
