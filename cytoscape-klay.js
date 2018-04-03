@@ -366,7 +366,7 @@ module.exports = Object.assign != null ? Object.assign.bind(Object) : function (
 
 
 var defaults = {
-  nodeDimensionsIncludeLabels: undefined, // Boolean which changes whether label dimensions are included when calculating node dimensions (default true)
+  nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
   fit: true, // Whether to fit
   padding: 20, // Padding on fit
   animate: false, // Whether to transition the node positions
