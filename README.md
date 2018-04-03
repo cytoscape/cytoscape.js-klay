@@ -58,7 +58,7 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 
 ```js
 var options = {
-  nodeDimensionsIncludeLabels: undefined, // Boolean which changes whether label dimensions are included when calculating node dimensions (default true)
+  nodeDimensionsIncludeLabels: false, // Boolean which changes whether label dimensions are included when calculating node dimensions
   fit: true, // Whether to fit
   padding: 20, // Padding on fit
   animate: false, // Whether to transition the node positions
