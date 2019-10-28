@@ -112,7 +112,7 @@ var options = {
     spacing: 20, // Overall setting for the minimal amount of space to be left between objects
     thoroughness: 7 // How much effort should be spent to produce a nice layout..
   },
-  priority: function( edge ){ return null; }, // Edges with a non-nil value are skipped when geedy edge cycle breaking is enabled
+  priority: function( edge ){ return null; }, // Edges with a non-nil value are skipped when greedy edge cycle breaking is enabled
 };
 
 cy.layout( options ).run();

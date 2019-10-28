@@ -123,13 +123,14 @@ const makeEdge = function( edge, options ){
     _cyEle: edge,
     id: edge.id(),
     source: edge.data('source'),
-    target: edge.data('target')
+    target: edge.data('target'),
+    properties: {}
   };
 
   let priority = options.priority( edge );
 
   if( priority != null ){
-    k.priority = priority;
+    k.properties.priority = priority;
   }
 
   edge.scratch('klay', k);
