@@ -168,11 +168,11 @@ var getPos = function getPos(ele) {
     y: k.y
   };
 
-  if (parent.nonempty()) {
+  while (parent.nonempty()) {
     var kp = parent.scratch('klay');
-
     p.x += kp.x;
     p.y += kp.y;
+    parent = parent.parent();
   }
 
   return p;
