@@ -1,6 +1,6 @@
 {
   "name": "cytoscape-klay",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "description": "The Klay layout algorithm for Cytoscape.js",
   "main": "cytoscape-klay.js",
   "author": {
