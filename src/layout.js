@@ -83,11 +83,11 @@ const getPos = function( ele ){
     y: k.y
   };
 
-  if( parent.nonempty() ){
-    let kp = parent.scratch('klay');
-
+  while (parent.nonempty()) {
+    var kp = parent.scratch('klay');
     p.x += kp.x;
     p.y += kp.y;
+    parent = parent.parent();
   }
 
   return p;
