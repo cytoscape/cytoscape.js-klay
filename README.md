@@ -9,6 +9,8 @@ The [Klay](https://github.com/OpenKieler/klayjs) layout algorithm for Cytoscape.
 
 This discrete layout creates good results for most graphs and it supports compound nodes.
 
+> **Project status:** KLayJS is deprecated upstream in favour of [elkjs](https://github.com/kieler/elkjs). This extension still works well and remains available for existing Cytoscape.js applications that depend on KLayJS. For new projects or active development, consider [cytoscape.js-elk](https://github.com/cytoscape/cytoscape.js-elk), which is based on elkjs.
+
 
 ## Dependencies
 
